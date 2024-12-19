@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.png">
+
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/scripts/api.js"></script>
+  <script>
+    refresh_token();
+    form_submit((e) => {
+      e.preventDefault();
+      post("membership", {
+        access_level: get_field("access_level"),
+        price: get_field("price") - 0,
+        period: get_field("period"),
+        custom_period: get_field("custom_period")
+      })
+    });
+  </script>
+</head>
+
+<body>
+  <div class="fancy">
+
+    <form>
+      <div class="field">
+        <label for="access_level"><span class="hidden">Access level</span></label>
+        <input id="access_level" type="text" name="access_level" placeholder="Access Level" required>
+      </div>
+      <div class="field">
+        <label for="price"><span class="hidden">Price</span></label>
+        <input id="price" type="text" name="price" placeholder="Price">
+      </div>
+      <div class="field">
+        <label for="period"><span class="hidden">Period</span></label>
+        <input id="period" type="text" name="period" placeholder="Period" required>
+      </div>
+      <div class="field">
+        <label for="custom_period"><span class="hidden">custom period</span></label>
+        <input id="custom_period" type="text" name="custom_period" placeholder="Custom Period">
+      </div>
+
+      <div class="field">
+        <a href="/.."><input type="button" value="Back"></a>
+
+        <input type="submit" value="Create new">
+      </div>
+    </form>
+
+  </div>
+</body>
+
+</html>

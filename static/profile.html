@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.png">
+
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/scripts/api.js"></script>
+  <script>
+    refresh_token();
+    const u = window.location.search.split("?user=");
+    let path;
+    if (u.length > 1) {
+      path = "user/" + u[1];
+      get(path).then(e => { fill_fields(e) })
+    } else {
+      path = "user/self";
+      get(path).then(e => { fill_fields(e) });
+    }
+    const fill_fields = (data) => {
+      update_field("name", data);
+      update_field("surname", data);
+      update_field("email", data);
+    }
+    form_submit((e) => {
+      e.preventDefault();
+      put(path, {
+        name: get_field("name"),
+        surname: get_field("surname"),
+        email: get_field("email"),
+        password: get_field("password")
+      })
+    });
+  </script>
+</head>
+
+<body>
+  <div class="fancy">
+
+    <form>
+      <div class="field">
+        <label for="name"><span class="hidden">Name</span></label>
+        <input id="name" type="text" name="name" placeholder="Name" required>
+      </div>
+      <div class="field">
+        <label for="surname"><span class="hidden">Surname</span></label>
+        <input id="surname" type="text" name="surname" placeholder="Surname">
+      </div>
+      <div class="field">
+        <label for="email"><span class="hidden">Email</span></label>
+        <input id="email" type="text" name="email" placeholder="Email" required>
+      </div>
+      <div class="field">
+        <label for="password"><span class="hidden">Email</span></label>
+        <input id="password" type="password" name="password" placeholder="Password">
+      </div>
+
+      <div class="field">
+        <a href=".."><input type="button" value="Back"></a>
+
+        <input type="submit" value="Save changes">
+      </div>
+    </form>
+
+  </div>
+</body>
+
+</html>

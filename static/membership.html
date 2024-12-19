@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="icon" type="image/x-icon" href="/favicon.png">
+
+  <title>Dashboard</title>
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700" rel="stylesheet">
+  <link rel="stylesheet" href="/css/main.css">
+  <script src="/scripts/api.js"></script>
+  <script>
+    refresh_token();
+    window.addEventListener("load", () => {
+      get("membership/list").then((e) => populate(e));
+      const populate = (d) => {
+        let list = document.querySelector("#subs");
+        console.log(d);
+        for (var i = 0; i < d.length; i++) {
+          sub = d[i];;
+          let data = `<a href=".."><input type="button" value="${sub.access_level} - ${sub.price}UAH - ${sub.period}"></a>`;
+          list.insertAdjacentHTML('beforeend', data);
+        }
+      }
+      get("membership/self").then((e) => populate(e));
+      const populate_owned = (d) => {
+        let list = document.querySelector("#subs");
+        console.log(d);
+        for (var i = 0; i < d.length; i++) {
+          sub = d[i];;
+          let data = `<a href=".."><input type="button" value="Owned: ${sub.expire_at} - ${sub.payment_method}UAH - ${sub.renew}"></a>`;
+          list.insertAdjacentHTML('beforeend', data);
+        }
+      }
+    })
+  </script>
+</head>
+
+<body>
+  <div class="fancy">
+    <div id="subs">
+
+    </div>
+    <div id="current">
+
+    </div>
+    <a href=".."><input type="button" value="Back"></a>
+    <a href="/membership/new"><input type="button" value="Create new"></a>
+  </div>
+</body>
+
+</html>
